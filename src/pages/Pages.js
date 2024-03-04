@@ -14,19 +14,30 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
-function Pages(props) {
+function Pages() {
   const menus = [
-    "Dashboard",
-    "Categories",
-    "Product",
-    "Orders",
-    "Users",
-    "Newsletter",
-    "Setting",
+    { name: "Dashboard", icon: <TableChartOutlinedIcon />, route: "dashboard" },
+    {
+      name: "Categories",
+      icon: <DashboardOutlinedIcon />,
+      route: "categories",
+    },
+    { name: "Product", icon: <Inventory2OutlinedIcon />, route: "product" },
+    { name: "Orders", icon: <ShoppingBagOutlinedIcon />, route: "orders" },
+    { name: "Users", icon: <PeopleOutlineOutlinedIcon />, route: "users" },
+    // { name: "Newsletter", icon: <InboxIcon /> },
+    // { name: "Setting", icon: <InboxIcon /> },
   ];
+  const navigate = useNavigate();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -51,13 +62,17 @@ function Pages(props) {
       <Toolbar />
       <Divider />
       <List>
-        {menus.map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {menus.map((menu, index) => (
+          <ListItem
+            key={menu.name}
+            disablePadding
+            onClick={() => {
+              navigate(menu.route);
+            }}
+          >
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>{menu.icon}</ListItemIcon>
+              <ListItemText primary={menu.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -138,7 +153,28 @@ function Pages(props) {
       >
         <Toolbar />
 
-        <div>Main Content</div>
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={<div>this is dashboard</div>}
+          ></Route>
+          <Route
+            path="/categories"
+            element={<div>this is categories</div>}
+          ></Route>
+          <Route
+            path="/product"
+            element={<div>this is product</div>}
+          ></Route>
+          <Route
+            path="/orders"
+            element={<div>this is orders</div>}
+          ></Route>
+          <Route
+            path="/users"
+            element={<div>this is users</div>}
+          ></Route>
+        </Routes>
       </Box>
     </Box>
   );
